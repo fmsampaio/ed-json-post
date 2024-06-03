@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker exp-logger-api.main:app
+web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker api.main:app
