@@ -29,7 +29,7 @@ class StudentData(BaseModel):
             "nome" : self.nome,
             "nasc" : self.nasc,
             "email" : self.email,
-            "reside_farropuilha" : self.reside_farroupilha,
+            "reside_farroupilha" : self.reside_farroupilha,
             "altura" : self.altura,
             "curso" : self.curso.getJson()
         }
