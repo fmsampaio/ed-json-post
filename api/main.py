@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException, status, Response
 
 from .database import SessionLocal, get_db, Base, engine
 from . import schemas, models
@@ -38,4 +38,15 @@ def create(request: schemas.StudentData, db: SessionLocal = Depends(get_db)):
     db.refresh(new_json_data)
     return new_json_data
 
+@app.delete('/data/{id}')
+def destroy(id: int, db: SessionLocal = Depends(get_db)):
+    query = checkDataById(id)
+    query.delete(synchronize_session=False)
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
+def checkDataById(id, db):
+    query = db.query(models.JsonData).filter(models.JsonData.id == id)
+    if not query.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'student data with id equals to {id} was not found')
+    return query
