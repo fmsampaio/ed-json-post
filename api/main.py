@@ -40,7 +40,7 @@ def create(request: schemas.StudentData, db: SessionLocal = Depends(get_db)):
 
 @app.delete('/data/{id}')
 def destroy(id: int, db: SessionLocal = Depends(get_db)):
-    query = checkDataById(id)
+    query = checkDataById(id, db)
     query.delete(synchronize_session=False)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
